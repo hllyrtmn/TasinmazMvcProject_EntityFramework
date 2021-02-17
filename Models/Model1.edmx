@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TasinmazDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BILGI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ADA" Type="nvarchar" MaxLength="50" />
+          <Property Name="PARSEL" Type="nvarchar" MaxLength="50" />
+          <Property Name="NITELIK" Type="nvarchar" MaxLength="50" />
+          <Property Name="ADRES" Type="nvarchar" MaxLength="200" />
+          <Property Name="MAHID" Type="int" />
+          <Property Name="KULID" Type="int" />
+        </EntityType>
+        <EntityType Name="IL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="AD" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PLAKA" Type="nvarchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="ILCE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="AD" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ILID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KULLANICI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAIL" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="PAROLA" Type="nvarchar" MaxLength="300" />
+          <Property Name="DURUM" Type="nvarchar" MaxLength="11" />
+        </EntityType>
+        <EntityType Name="LOG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="UrlAccessed" Type="nvarchar" MaxLength="50" />
+          <Property Name="Data" Type="nvarchar" MaxLength="500" />
+          <Property Name="ExecutionMs" Type="float" />
+          <Property Name="AddedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MAHALLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AD" Type="nvarchar" MaxLength="30" />
+          <Property Name="SEMTID" Type="int" />
+          <Property Name="POSTAKOD" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="SEMT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ILCEID" Type="int" Nullable="false" />
+          <Property Name="AD" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BILGI_KULLANICI">
+          <End Role="KULLANICI" Type="Self.KULLANICI" Multiplicity="0..1" />
+          <End Role="BILGI" Type="Self.BILGI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KULLANICI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BILGI">
+              <PropertyRef Name="KULID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BILGI_MAHALLE">
+          <End Role="MAHALLE" Type="Self.MAHALLE" Multiplicity="0..1" />
+          <End Role="BILGI" Type="Self.BILGI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MAHALLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BILGI">
+              <PropertyRef Name="MAHID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ILCE_IL">
+          <End Role="IL" Type="Self.IL" Multiplicity="1" />
+          <End Role="ILCE" Type="Self.ILCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ILCE">
+              <PropertyRef Name="ILID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOG_KULLANICI">
+          <End Role="KULLANICI" Type="Self.KULLANICI" Multiplicity="0..1" />
+          <End Role="LOG" Type="Self.LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KULLANICI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LOG">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MAHALLE_SEMT">
+          <End Role="SEMT" Type="Self.SEMT" Multiplicity="0..1" />
+          <End Role="MAHALLE" Type="Self.MAHALLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SEMT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MAHALLE">
+              <PropertyRef Name="SEMTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SEMT_ILCE">
+          <End Role="ILCE" Type="Self.ILCE" Multiplicity="1" />
+          <End Role="SEMT" Type="Self.SEMT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ILCE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SEMT">
+              <PropertyRef Name="ILCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TasinmazDbModelStoreContainer">
+          <EntitySet Name="BILGI" EntityType="Self.BILGI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IL" EntityType="Self.IL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ILCE" EntityType="Self.ILCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KULLANICI" EntityType="Self.KULLANICI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOG" EntityType="Self.LOG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MAHALLE" EntityType="Self.MAHALLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SEMT" EntityType="Self.SEMT" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BILGI_KULLANICI" Association="Self.FK_BILGI_KULLANICI">
+            <End Role="KULLANICI" EntitySet="KULLANICI" />
+            <End Role="BILGI" EntitySet="BILGI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BILGI_MAHALLE" Association="Self.FK_BILGI_MAHALLE">
+            <End Role="MAHALLE" EntitySet="MAHALLE" />
+            <End Role="BILGI" EntitySet="BILGI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ILCE_IL" Association="Self.FK_ILCE_IL">
+            <End Role="IL" EntitySet="IL" />
+            <End Role="ILCE" EntitySet="ILCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOG_KULLANICI" Association="Self.FK_LOG_KULLANICI">
+            <End Role="KULLANICI" EntitySet="KULLANICI" />
+            <End Role="LOG" EntitySet="LOG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MAHALLE_SEMT" Association="Self.FK_MAHALLE_SEMT">
+            <End Role="SEMT" EntitySet="SEMT" />
+            <End Role="MAHALLE" EntitySet="MAHALLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SEMT_ILCE" Association="Self.FK_SEMT_ILCE">
+            <End Role="ILCE" EntitySet="ILCE" />
+            <End Role="SEMT" EntitySet="SEMT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TasinmazDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BILGI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ADA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PARSEL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NITELIK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ADRES" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MAHID" Type="Int32" />
+          <Property Name="KULID" Type="Int32" />
+          <NavigationProperty Name="KULLANICI" Relationship="Self.FK_BILGI_KULLANICI" FromRole="BILGI" ToRole="KULLANICI" />
+          <NavigationProperty Name="MAHALLE" Relationship="Self.FK_BILGI_MAHALLE" FromRole="BILGI" ToRole="MAHALLE" />
+        </EntityType>
+        <EntityType Name="IL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="AD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PLAKA" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ILCE" Relationship="Self.FK_ILCE_IL" FromRole="IL" ToRole="ILCE" />
+        </EntityType>
+        <EntityType Name="ILCE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="AD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ILID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="IL" Relationship="Self.FK_ILCE_IL" FromRole="ILCE" ToRole="IL" />
+          <NavigationProperty Name="SEMT" Relationship="Self.FK_SEMT_ILCE" FromRole="ILCE" ToRole="SEMT" />
+        </EntityType>
+        <EntityType Name="KULLANICI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAIL" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PAROLA" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="DURUM" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BILGI" Relationship="Self.FK_BILGI_KULLANICI" FromRole="KULLANICI" ToRole="BILGI" />
+          <NavigationProperty Name="LOG" Relationship="Self.FK_LOG_KULLANICI" FromRole="KULLANICI" ToRole="LOG" />
+        </EntityType>
+        <EntityType Name="LOG">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UrlAccessed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ExecutionMs" Type="Double" />
+          <Property Name="AddedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="KULLANICI" Relationship="Self.FK_LOG_KULLANICI" FromRole="LOG" ToRole="KULLANICI" />
+        </EntityType>
+        <EntityType Name="MAHALLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AD" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="SEMTID" Type="Int32" />
+          <Property Name="POSTAKOD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BILGI" Relationship="Self.FK_BILGI_MAHALLE" FromRole="MAHALLE" ToRole="BILGI" />
+          <NavigationProperty Name="SEMT" Relationship="Self.FK_MAHALLE_SEMT" FromRole="MAHALLE" ToRole="SEMT" />
+        </EntityType>
+        <EntityType Name="SEMT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ILCEID" Type="Int32" Nullable="false" />
+          <Property Name="AD" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ILCE" Relationship="Self.FK_SEMT_ILCE" FromRole="SEMT" ToRole="ILCE" />
+          <NavigationProperty Name="MAHALLE" Relationship="Self.FK_MAHALLE_SEMT" FromRole="SEMT" ToRole="MAHALLE" />
+        </EntityType>
+        <Association Name="FK_BILGI_KULLANICI">
+          <End Role="KULLANICI" Type="Self.KULLANICI" Multiplicity="0..1" />
+          <End Role="BILGI" Type="Self.BILGI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KULLANICI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BILGI">
+              <PropertyRef Name="KULID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BILGI_MAHALLE">
+          <End Role="MAHALLE" Type="Self.MAHALLE" Multiplicity="0..1" />
+          <End Role="BILGI" Type="Self.BILGI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MAHALLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BILGI">
+              <PropertyRef Name="MAHID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ILCE_IL">
+          <End Role="IL" Type="Self.IL" Multiplicity="1" />
+          <End Role="ILCE" Type="Self.ILCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ILCE">
+              <PropertyRef Name="ILID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SEMT_ILCE">
+          <End Role="ILCE" Type="Self.ILCE" Multiplicity="1" />
+          <End Role="SEMT" Type="Self.SEMT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ILCE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SEMT">
+              <PropertyRef Name="ILCEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOG_KULLANICI">
+          <End Role="KULLANICI" Type="Self.KULLANICI" Multiplicity="0..1" />
+          <End Role="LOG" Type="Self.LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KULLANICI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LOG">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MAHALLE_SEMT">
+          <End Role="SEMT" Type="Self.SEMT" Multiplicity="0..1" />
+          <End Role="MAHALLE" Type="Self.MAHALLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SEMT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MAHALLE">
+              <PropertyRef Name="SEMTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TasinmazDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BILGI" EntityType="Self.BILGI" />
+          <EntitySet Name="IL" EntityType="Self.IL" />
+          <EntitySet Name="ILCE" EntityType="Self.ILCE" />
+          <EntitySet Name="KULLANICI" EntityType="Self.KULLANICI" />
+          <EntitySet Name="LOG" EntityType="Self.LOG" />
+          <EntitySet Name="MAHALLE" EntityType="Self.MAHALLE" />
+          <EntitySet Name="SEMT" EntityType="Self.SEMT" />
+          <AssociationSet Name="FK_BILGI_KULLANICI" Association="Self.FK_BILGI_KULLANICI">
+            <End Role="KULLANICI" EntitySet="KULLANICI" />
+            <End Role="BILGI" EntitySet="BILGI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BILGI_MAHALLE" Association="Self.FK_BILGI_MAHALLE">
+            <End Role="MAHALLE" EntitySet="MAHALLE" />
+            <End Role="BILGI" EntitySet="BILGI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ILCE_IL" Association="Self.FK_ILCE_IL">
+            <End Role="IL" EntitySet="IL" />
+            <End Role="ILCE" EntitySet="ILCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SEMT_ILCE" Association="Self.FK_SEMT_ILCE">
+            <End Role="ILCE" EntitySet="ILCE" />
+            <End Role="SEMT" EntitySet="SEMT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOG_KULLANICI" Association="Self.FK_LOG_KULLANICI">
+            <End Role="KULLANICI" EntitySet="KULLANICI" />
+            <End Role="LOG" EntitySet="LOG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MAHALLE_SEMT" Association="Self.FK_MAHALLE_SEMT">
+            <End Role="SEMT" EntitySet="SEMT" />
+            <End Role="MAHALLE" EntitySet="MAHALLE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TasinmazDbModelStoreContainer" CdmEntityContainer="TasinmazDbEntities">
+          <EntitySetMapping Name="BILGI">
+            <EntityTypeMapping TypeName="TasinmazDbModel.BILGI">
+              <MappingFragment StoreEntitySet="BILGI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ADA" ColumnName="ADA" />
+                <ScalarProperty Name="PARSEL" ColumnName="PARSEL" />
+                <ScalarProperty Name="NITELIK" ColumnName="NITELIK" />
+                <ScalarProperty Name="ADRES" ColumnName="ADRES" />
+                <ScalarProperty Name="MAHID" ColumnName="MAHID" />
+                <ScalarProperty Name="KULID" ColumnName="KULID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IL">
+            <EntityTypeMapping TypeName="TasinmazDbModel.IL">
+              <MappingFragment StoreEntitySet="IL">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AD" ColumnName="AD" />
+                <ScalarProperty Name="PLAKA" ColumnName="PLAKA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ILCE">
+            <EntityTypeMapping TypeName="TasinmazDbModel.ILCE">
+              <MappingFragment StoreEntitySet="ILCE">
+                <ScalarProperty Name="AD" ColumnName="AD" />
+                <ScalarProperty Name="ILID" ColumnName="ILID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KULLANICI">
+            <EntityTypeMapping TypeName="TasinmazDbModel.KULLANICI">
+              <MappingFragment StoreEntitySet="KULLANICI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+                <ScalarProperty Name="PAROLA" ColumnName="PAROLA" />
+                <ScalarProperty Name="DURUM" ColumnName="DURUM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOG">
+            <EntityTypeMapping TypeName="TasinmazDbModel.LOG">
+              <MappingFragment StoreEntitySet="LOG">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="UrlAccessed" ColumnName="UrlAccessed" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="ExecutionMs" ColumnName="ExecutionMs" />
+                <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MAHALLE">
+            <EntityTypeMapping TypeName="TasinmazDbModel.MAHALLE">
+              <MappingFragment StoreEntitySet="MAHALLE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AD" ColumnName="AD" />
+                <ScalarProperty Name="SEMTID" ColumnName="SEMTID" />
+                <ScalarProperty Name="POSTAKOD" ColumnName="POSTAKOD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SEMT">
+            <EntityTypeMapping TypeName="TasinmazDbModel.SEMT">
+              <MappingFragment StoreEntitySet="SEMT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ILCEID" ColumnName="ILCEID" />
+                <ScalarProperty Name="AD" ColumnName="AD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

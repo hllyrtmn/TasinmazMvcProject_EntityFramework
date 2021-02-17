@@ -1,0 +1,114 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@using System.Web.UI.HtmlControls
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap.min.css")">
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .dropbtn {
+            background-color: #f9f9f9;
+            color: #9d9d9d;
+            padding: 15px;
+            font-size: 14px;
+            border: none;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            text-decoration: none;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #f9f9f9;
+            color: #337ab7;
+        }
+    </style>
+</head>
+<body style="background-image: url('../../Login/images/bg-01.jpeg');background-size: 100%;background-attachment: fixed;">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #f9f9f9;border-bottom: 1px solid #337ab7;margin-bottom: 50px">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand"></a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Taşınmaz Listesi", "Index", "Tasinmaz")</li>
+
+            </ul>
+            @if (User.IsInRole("Yonetici"))
+            {
+                <ul class="nav navbar-nav"><li>@Html.ActionLink("Log Kayıtları", "Index", "Log")</li> </ul>
+
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("İl,İlçe,Semt,Mahalle Ekle", "SehirListele", "Admin")</li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Kullanici Ekle Sil", "Index", "Admin")</li>
+                </ul>
+
+            }
+            <ul class="nav navbar-nav navbar-center">
+                <li>
+                    <img src="~/Login/images/cropped-odakgislogo-0-1.png" style="width: 265px; margin-top: 8px" />
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+
+                    <div class="dropdown">
+
+                        <button class="dropbtn">
+                            <span class="glyphicon glyphicon-user"></span>
+                            @if (Session["MAIL"] != null)
+                            {@Session["MAIL"].ToString()
+                        }
+                        </button>
+                        <div class="dropdown-content" style="text-align:center;">
+                            <a style="text-decoration: none;color: #9d9d9d;background-color :#f9f9f9; font-weight:bold">Kayıtlı Taşınmaz</a>
+                            <a style="text-decoration: none;color: #9d9d9d;background-color :#f9f9f9"><span class="	glyphicon glyphicon-home"></span>  @ViewBag.tasinmazsayi</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="@Url.Action("Logout", "Login")" class="cik" style="color: #9d9d9d;"><span class="glyphicon glyphicon-log-in"></span> Çıkış</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div></div>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4068f764335b4c959e71160cd9d794b9" Name="Diagram1">
+        <EntityTypeShape EntityType="TasinmazDbModel.BILGI" Width="1.5" PointX="9.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TasinmazDbModel.IL" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TasinmazDbModel.ILCE" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TasinmazDbModel.KULLANICI" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TasinmazDbModel.LOG" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TasinmazDbModel.MAHALLE" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TasinmazDbModel.SEMT" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="TasinmazDbModel.FK_BILGI_KULLANICI" ManuallyRouted="false" />
+        <AssociationConnector Association="TasinmazDbModel.FK_BILGI_MAHALLE" ManuallyRouted="false" />
+        <AssociationConnector Association="TasinmazDbModel.FK_ILCE_IL" ManuallyRouted="false" />
+        <AssociationConnector Association="TasinmazDbModel.FK_SEMT_ILCE" ManuallyRouted="false" />
+        <AssociationConnector Association="TasinmazDbModel.FK_LOG_KULLANICI" ManuallyRouted="false" />
+        <AssociationConnector Association="TasinmazDbModel.FK_MAHALLE_SEMT" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,82 @@
+﻿@model TasinmazMvc.Models.KULLANICI
+@{
+
+    Layout = null;
+}
+
+<script type="text/javascript">
+
+    function comparePassword(event) {
+        var pass1, pass2;
+
+        if (event.type == 'change') {
+            // this = pass1, el = pass2
+            pass1 = $(this);
+            pass2 = $(event.data.el);
+        } else {
+            // this = pass2, el = pass1
+            pass2 = $(this);
+            pass1 = $(event.data.el);
+        }
+
+        if (pass1.val() != pass2.val()) {
+            pass2[0].setCustomValidity(event.data.msg);
+        } else {
+            pass2[0].setCustomValidity('');
+        }
+    }
+
+    $(".password_match").each(function (i, e) {
+        var msg = $(e).data('msg');
+        if ($("input[type=password]", e).length == 2) {
+            var elem = $("input[type=password]", e);
+            $(elem[0]).change({ el: elem[1], msg: msg }, comparePassword);
+            $(elem[1]).keyup({ el: elem[0], msg: msg }, comparePassword);
+        }
+    });
+
+    $(function(){
+
+        $('input#demo').passwordstrength({
+            'minlength': 6, // Minimum length of password
+            'number'   : true, // Password requires at least one number
+            'capital'  : true, // Password requires at least one uppercase letter
+            'special'  : true, // Password requires at least one special character
+            'labels'   : {
+                'general'   : 'The password must have :',
+                'minlength' : 'At leaset {{minlength}} characters',
+                'number': 'At least one number',
+                'capital'   : 'At least one uppercase letter',
+                'special'   : 'At least one special character'
+            }
+        });
+
+    });
+
+</script>
+
+@using (Html.BeginForm("KullaniciEkle", "Admin", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.ID)
+    <div class="form-group">
+        @Html.LabelFor(m => m.MAIL, new { @class = "control-label" })
+        @Html.EditorFor(m => m.MAIL, new { htmlAttributes = new { @class = "form-control" }})
+    </div>
+    <div class="form-group">
+        <div class="password_match" data-msg="Parolalar eşleşmiyor">
+            @Html.LabelFor(m => m.PAROLA, new { @class = "control-label" })
+            @Html.EditorFor(m => m.PAROLA, new { htmlAttributes = new { @class = "form-control", @type = "password", @name = "pass1", @required = "Lütfen Bu alanı Doldurun"}})
+            <label style="margin-top: 2px">PAROLA TEKRARI</label>
+            <input type="password" name="pass2" class="form-control" required="Lütfen Bu alanı Doldurun" />
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DURUM, new { @class = "control-label" })
+        @Html.EditorFor(m => m.DURUM, new { htmlAttributes = new { @class = "form-control" }})
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Ekle" class="btn btn-primary" name="test" onclick="CheckPassword(document.form1.pass2)" />
+        <input type="reset" value="Vazgeç" class="btn btn-danger" />
+    </div>
+}
+

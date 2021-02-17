@@ -1,0 +1,126 @@
+﻿/*                 Dropdown Button                   */
+/*===================================================*/
+
+.dropdown {
+    position: relative;
+    width: 300px;
+    display: inline-block;
+}
+    .dropdown .dropdown-button {
+        line-height: -moz-block-height;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        color: initial;
+        background-color: white;
+        border: 1px solid rgb(169, 169, 169);
+        -ms-border-radius: 2px;
+        border-radius: 2px;
+        width: inherit;
+        padding: 2px;
+        -moz-min-width: 161px;
+        -ms-min-width: 161px;
+        -o-min-width: 161px;
+        -webkit-min-width: 161px;
+        min-width: 161px;
+        white-space: pre;
+        display: inline-block;
+        font: -webkit-small-control;
+        align-items: center;
+        text-align: start;
+        text-align: left;
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-transform: none;
+        text-indent: 0px;
+        -ms-text-shadow: none;
+        text-shadow: none;
+        -webkit-appearance: menulist;
+        -webkit-rtl-ordering: logical;
+        -webkit-writing-mode: horizontal-tb;
+        -moz-appearance:menulist;
+        
+    }
+
+.dropdown-button .caret {
+    display: inline-block;
+    position:absolute;
+    left: 95.5%;
+    top: 45%;
+    vertical-align: middle;
+    border-top: 4px solid;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    -webkit-border-before-width: 0px;
+}
+
+.dropdown-button:hover,
+.dropdown-button:focus,
+.dropdown-button:active,
+.open > .dropdown-toggle.dropdown-button {
+    color: black;
+    border-color: rgb(127, 127, 127);
+}
+
+.dropdown .dropdown-toggle:focus {
+    outline: 0;
+    -webkit-box-shadow: blueviolet 0.3px 0.3px 0.3px, blueviolet -0.3px -0.3px 0.3px;
+    -ms-box-shadow: blueviolet 0.3px 0.3px 0.3px, blueviolet -0.3px -0.3px 0.3px;
+    box-shadow: blueviolet 0.3px 0.3px 0.3px, blueviolet -0.3px -0.3px 0.3px;
+}
+
+
+/*                  Dropdown Menu                    */
+/*===================================================*/
+.dropdown .dropdown-menu {
+    width: 99.3%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 0 0;
+    margin: 0 0 0;
+    font-size: inherit;
+    text-align: left;
+    list-style: none;
+    background-color: white;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgb(169, 169, 169);
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+    .dropdown .dropdown-menu > li > a {
+        display: block;
+        padding: 0px 5px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.42857143;
+        color: #333;
+        white-space: nowrap;
+        cursor: default;
+    }
+
+        .dropdown .dropdown-menu > li > a:hover,
+        .dropdown .dropdown-menu > li > a:focus {
+            color: #262626;
+            text-decoration: none;
+            background-color: #1e90ff;
+        }
+
+.open > .dropdown-menu {
+    display: block;
+}
+
+.open > a {
+    outline: 0;
+}
+
+a {
+    text-decoration: none;
+}

@@ -1,0 +1,39 @@
+﻿@model TasinmazMvc.Models.BILGI
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("TasinmazEkle", "Tasinmaz", FormMethod.Post))
+{
+    
+
+    
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ADA, new { @class = "control-label" })
+                        @Html.EditorFor(m => m.ADA, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PARSEL, new { @class = "control-label" })
+                        @Html.EditorFor(m => m.PARSEL, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.NITELIK, new { @class = "control-label" })
+                        @Html.EditorFor(m => m.NITELIK, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ADRES, new { @class = "control-label" })
+                        @Html.EditorFor(m => m.ADRES, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Onayla" class="btn btn-primary" />
+                        <input type="reset" value="Reset" class="btn btn-danger" />
+                    </div>
+
+}
+
